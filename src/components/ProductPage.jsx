@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { updateCart } from "../Store/Slices/cartSlice";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { motion } from "framer-motion";
+import { fetchProducts } from "../Store/Slices/productSlice";
 const reviews = { href: "#", average: 4, totalCount: 117 };
 const product = {
   name: "Basic Tee 6-Pack",
@@ -61,50 +63,26 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const ProductPage = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const params = useParams();
   const { id } = params;
   const state = useSelector((state) => state.product);
   const { data } = state;
   const prod = data.filter((e) => e.id === Number.parseInt(id));
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
-    <div className="bg-gray-100">
+    <motion.div className="bg-gray-100" layout>
       <div className="pt-6">
         {/* Image gallery */}
         <div className="mx-auto mt-6 max-w-2xl sm:px-0 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8 lg:gap-y-8">
-          {/* <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
-              <img
-                src={product.images[0].src}
-                alt={product.images[0].alt}
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
-            <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-              <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-                <img
-                  src={product.images[1].src}
-                  alt={product.images[1].alt}
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-              <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-                <img
-                  src={product.images[2].src}
-                  alt={product.images[2].alt}
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-            </div>
-            <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-              <img
-                src={product.images[3].src}
-                alt={product.images[3].alt}
-                className="h-full w-full object-cover object-center"
-              />
-            </div>  */}
-          {prod[0].images.map((e,index) => {
+          {prod[0].images.map((e, index) => {
             return (
-              <div key={index} className="aspect-h-1 m-5  aspect-w-2  lg:m-0 overflow-hidden rounded-lg">
+              <div
+                key={index}
+                className="aspect-h-1 m-5  aspect-w-2  lg:m-0 overflow-hidden rounded-lg"
+              >
                 <img
                   src={e}
                   className="h-full w-full object-cover object-center"
@@ -158,115 +136,23 @@ const ProductPage = () => {
             </div>
 
             <form className="mt-10">
-              {/* Colors */}
-              {/* <div>
-                  <h3 className="text-sm font-medium text-gray-900">Color</h3>
-
-                  <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-4">
-                    <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
-                    <div className="flex items-center space-x-3">
-                      {product.colors.map((color) => (
-                        <RadioGroup.Option
-                          key={color.name}
-                          value={color}
-                          className={({ active, checked }) =>
-                            classNames(
-                              color.selectedClass,
-                              active && checked ? 'ring ring-offset-1' : '',
-                              !active && checked ? 'ring-2' : '',
-                              'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'
-                            )
-                          }
-                        >
-                          <RadioGroup.Label as="span" className="sr-only">
-                            {color.name}
-                          </RadioGroup.Label>
-                          <span
-                            aria-hidden="true"
-                            className={classNames(
-                              color.class,
-                              'h-8 w-8 rounded-full border border-black border-opacity-10'
-                            )}
-                          />
-                        </RadioGroup.Option>
-                      ))}
-                    </div>
-                  </RadioGroup>
-                </div> */}
-
-              {/* Sizes */}
-              {/* <div className="mt-10">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                    <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                      Size guide
-                    </a>
-                  </div>
-
-                  <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
-                    <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
-                    <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                      {product.sizes.map((size) => (
-                        <RadioGroup.Option
-                          key={size.name}
-                          value={size}
-                          disabled={!size.inStock}
-                          className={({ active }) =>
-                            classNames(
-                              size.inStock
-                                ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
-                                : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                              active ? 'ring-2 ring-indigo-500' : '',
-                              'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
-                            )
-                          }
-                        >
-                          {({ active, checked }) => (
-                            <>
-                              <RadioGroup.Label as="span">{size.name}</RadioGroup.Label>
-                              {size.inStock ? (
-                                <span
-                                  className={classNames(
-                                    active ? 'border' : 'border-2',
-                                    checked ? 'border-indigo-500' : 'border-transparent',
-                                    'pointer-events-none absolute -inset-px rounded-md'
-                                  )}
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <span
-                                  aria-hidden="true"
-                                  className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                                >
-                                  <svg
-                                    className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                                    viewBox="0 0 100 100"
-                                    preserveAspectRatio="none"
-                                    stroke="currentColor"
-                                  >
-                                    <line x1={0} y1={100} x2={100} y2={0} vectorEffect="non-scaling-stroke" />
-                                  </svg>
-                                </span>
-                              )}
-                            </>
-                          )}
-                        </RadioGroup.Option>
-                      ))}
-                    </div>
-                  </RadioGroup>
-                </div> */}
-
               <Link to="/cart">
                 <button
-                  onClick={()=>dispatch(updateCart({
-                    id: Number.parseInt(id),
-                    title: prod.title,
-                    price: prod.price,
-                    quantity: prod.quantity,
-                    total: prod.quantity*prod.price,
-                    discountPercentage : prod.discountPercentage,
-                    discountedPrice: prod.price-prod.price*(prod.discountPercentage/100)
-                  }))}
+                  onClick={() =>
+                    dispatch(
+                      updateCart({
+                        id: Number.parseInt(id),
+                        title: prod.title,
+                        price: prod.price,
+                        quantity: prod.quantity,
+                        total: prod.quantity * prod.price,
+                        discountPercentage: prod.discountPercentage,
+                        discountedPrice:
+                          prod.price -
+                          prod.price * (prod.discountPercentage / 100),
+                      })
+                    )
+                  }
                   className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   Add to cart
@@ -309,7 +195,7 @@ const ProductPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
