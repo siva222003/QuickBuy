@@ -9,7 +9,7 @@ const Logo = () => {
         src="https://t4.ftcdn.net/jpg/03/11/82/23/360_F_311822387_xkOba8YuEwivE086Sc0u1ozHGRPpE4h2.jpg"
         alt="Your Company"
       />
-      <h1 className='text-2xl font-mono'>Infinity</h1>
+      <h1 className='text-2xl font-mono'>QuickBuy</h1>
     </Link>
   </div>
   )
