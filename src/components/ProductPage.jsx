@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { updateCart } from "../Store/Slices/cartSlice";
+import { updateCart } from "../app/Slices/cartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { motion } from "framer-motion";
-import { fetchProducts } from "../Store/Slices/productSlice";
+import { fetchProducts } from "../app/Slices/productSlice";
 const reviews = { href: "#", average: 4, totalCount: 117 };
 const product = {
   name: "Basic Tee 6-Pack",
@@ -144,6 +144,7 @@ const ProductPage = () => {
                         id: Number.parseInt(id),
                         title: prod.title,
                         price: prod.price,
+                        imageSrc : images[0],
                         quantity: prod.quantity,
                         total: prod.quantity * prod.price,
                         discountPercentage: prod.discountPercentage,

@@ -8,7 +8,7 @@ import {
   fetchProducts,
   fetchProductCategories,
   fetchProductbyFilter,
-} from "../Store/Slices/productSlice";
+} from "../app/Slices/productSlice";
 import MobileFilter from "../components/Home/MobileFilter";
 import HomeHeader from "../components/Home/HomeHeader";
 import DesktopFilters from "../components/Home/DesktopFilters";

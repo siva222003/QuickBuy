@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { logoutUser } from "../Store/Slices/userSlice";
+import { logoutUser } from "../app/Slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import MobileMenuButton from "../components/Navbar/MobileMenuButton";
 import Logo from "../components/Navbar/Logo";

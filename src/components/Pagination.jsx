@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProductbyPage } from "../Store/Slices/productSlice";
+import { fetchProductbyPage } from "../app/Slices/productSlice";
 const Pagination = ({ category }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.product);

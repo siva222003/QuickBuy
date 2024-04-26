@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
-import { createUser } from '../Store/Slices/userSlice';
+import { createUser } from '../app/Slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const navigate = useNavigate()
